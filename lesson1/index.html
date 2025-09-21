@@ -7,226 +7,402 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap');
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: inherit;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            background: radial-gradient(120% 120% at 10% 10%, #5a0f1f 0%, #1a050a 45%, #040002 100%);
+            color: #fce9ef;
             min-height: 100vh;
-            padding: 20px;
+            padding: 48px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
         }
-        
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(65px);
+            opacity: 0.45;
+            z-index: 0;
+        }
+
+        body::before {
+            width: 65vw;
+            height: 65vw;
+            top: -28vw;
+            left: -18vw;
+            background: radial-gradient(circle at center, rgba(255, 87, 115, 0.45), rgba(0, 0, 0, 0));
+            animation: glow 14s ease-in-out infinite alternate;
+        }
+
+        body::after {
+            width: 52vw;
+            height: 52vw;
+            bottom: -24vw;
+            right: -12vw;
+            background: radial-gradient(circle at center, rgba(139, 0, 36, 0.6), rgba(0, 0, 0, 0));
+            animation: glow 18s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes glow {
+            from {
+                transform: scale(1);
+                opacity: 0.45;
+            }
+            to {
+                transform: scale(1.12);
+                opacity: 0.65;
+            }
+        }
+
         .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 800px;
-            padding: 30px;
-            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+            width: min(960px, 100%);
+            padding: 44px 38px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(84, 0, 23, 0.72), rgba(18, 0, 6, 0.92));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(30px);
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
         }
-        
+
+        .container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(120% 120% at 10% 10%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+            mix-blend-mode: screen;
+            opacity: 0.4;
+        }
+
         h1 {
             text-align: center;
-            color: #4a4a4a;
-            margin-bottom: 20px;
-            font-size: 2.2rem;
+            margin-bottom: 6px;
+            font-size: clamp(2.2rem, 4.4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff3f7;
+            text-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
         }
-        
+
         .description {
             text-align: center;
-            margin-bottom: 30px;
-            color: #666;
-            line-height: 1.6;
+            color: rgba(255, 230, 236, 0.78);
+            line-height: 1.75;
+            font-size: 1.05rem;
+            max-width: 640px;
+            margin: 0 auto;
         }
-        
+
+        .glass-card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+            border-radius: 24px;
+            padding: 26px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 24px 60px rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(28px);
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: -120% 40% 60% -40%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            z-index: 0;
+        }
+
+        .glass-card:hover::before {
+            opacity: 0.35;
+            transform: translateY(-8%);
+        }
+
+        .glass-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
         .api-section {
-            margin-bottom: 25px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
         }
-        
+
         .api-section h2 {
-            margin-bottom: 15px;
-            color: #4a4a4a;
             font-size: 1.4rem;
+            color: #ffeaf0;
+            font-weight: 600;
+            text-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         }
-        
+
         .api-input {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
-        
+
+        label {
+            color: rgba(255, 227, 235, 0.78);
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
         input[type="text"] {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            font-size: 1rem;
+            color: #ffeef5;
+            background: rgba(14, 1, 6, 0.7);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
         }
-        
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 227, 232, 0.5);
+        }
+
         input[type="text"]:focus {
-            border-color: #667eea;
+            border-color: rgba(255, 76, 106, 0.85);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 0 0 4px rgba(255, 76, 106, 0.18);
+            transform: translateY(-1px);
         }
-        
+
+        small {
+            color: rgba(255, 226, 232, 0.6);
+        }
+
         button {
-            background: linear-gradient(to right, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #ff5a7a 0%, #b60624 45%, #4d010c 100%);
+            color: #fff6f8;
+            border: 1px solid rgba(255, 125, 150, 0.4);
+            padding: 14px 28px;
+            border-radius: 16px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 1.05rem;
             font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 10px;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        .review-section {
-            margin-bottom: 25px;
-        }
-        
-        .review-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        
-        .review-text {
-            line-height: 1.6;
-            margin-bottom: 15px;
-            font-size: 16px;
-            color: #444;
-        }
-        
-        .sentiment-result {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            background-color: #f8f9fa;
-            font-weight: bold;
-            font-size: 18px;
+            gap: 10px;
+            letter-spacing: 0.02em;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+            box-shadow: 0 22px 40px rgba(176, 6, 36, 0.45);
         }
-        
-        .positive {
-            color: #28a745;
-            border: 2px solid #28a745;
+
+        button:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 26px 60px rgba(255, 64, 102, 0.55);
+            filter: brightness(1.05);
         }
-        
-        .negative {
-            color: #dc3545;
-            border: 2px solid #dc3545;
+
+        button:active {
+            transform: translateY(0) scale(0.99);
         }
-        
-        .neutral {
-            color: #ffc107;
-            border: 2px solid #ffc107;
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+            filter: saturate(0.6);
         }
-        
-        .icon {
-            font-size: 24px;
+
+        button i {
+            font-size: 1.1rem;
         }
-        
+
+        .review-section {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        #analyze-btn {
+            align-self: center;
+        }
+
         .loading {
             display: none;
-            text-align: center;
-            margin: 20px 0;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 20px 0;
+            color: rgba(255, 229, 236, 0.75);
         }
-        
+
         .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #667eea;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #ff4c6a;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 34px;
+            height: 34px;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
         .error {
-            color: #dc3545;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            margin: 10px 0;
             display: none;
+            color: #ffc6d0;
+            padding: 14px 18px;
+            border-radius: 14px;
+            background: rgba(255, 74, 104, 0.12);
+            border: 1px solid rgba(255, 99, 130, 0.35);
+            backdrop-filter: blur(12px);
         }
-        
+
+        .review-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .review-card h3 {
+            font-size: 1.15rem;
+            color: rgba(255, 236, 241, 0.9);
+            font-weight: 600;
+        }
+
+        .review-text {
+            line-height: 1.8;
+            font-size: 1rem;
+            color: rgba(255, 233, 238, 0.82);
+        }
+
+        .sentiment-result {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 22px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #fff3f6;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 22px 45px rgba(0, 0, 0, 0.45);
+        }
+
+        .sentiment-result.positive {
+            border-color: rgba(64, 239, 172, 0.6);
+            box-shadow: 0 0 35px rgba(64, 239, 172, 0.35);
+            background: linear-gradient(135deg, rgba(64, 239, 172, 0.18), rgba(20, 1, 10, 0.8));
+        }
+
+        .sentiment-result.negative {
+            border-color: rgba(255, 92, 92, 0.65);
+            box-shadow: 0 0 35px rgba(255, 92, 92, 0.35);
+            background: linear-gradient(135deg, rgba(255, 92, 92, 0.22), rgba(20, 1, 8, 0.85));
+        }
+
+        .sentiment-result.neutral {
+            border-color: rgba(255, 214, 126, 0.55);
+            box-shadow: 0 0 35px rgba(255, 214, 126, 0.32);
+            background: linear-gradient(135deg, rgba(255, 214, 126, 0.18), rgba(19, 1, 9, 0.82));
+        }
+
+        .icon {
+            font-size: 26px;
+        }
+
         .instructions {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: rgba(255, 230, 236, 0.78);
         }
-        
+
         .instructions h3 {
-            margin-bottom: 10px;
-            color: #4a4a4a;
+            margin-bottom: 12px;
+            color: rgba(255, 241, 245, 0.95);
+            font-size: 1.15rem;
         }
-        
+
         .instructions ol {
             padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
-        
-        .instructions li {
-            margin-bottom: 8px;
+
+        a {
+            color: #ff7a9c;
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
-        
+
+        a:hover {
+            color: #ff93b1;
+        }
+
         footer {
             text-align: center;
-            margin-top: 30px;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
+            color: rgba(255, 229, 236, 0.55);
+            font-size: 0.9rem;
+            margin-top: 12px;
         }
-        
-        @media (max-width: 600px) {
+
+        @media (max-width: 768px) {
+            body {
+                padding: 32px 16px;
+            }
+
             .container {
-                width: 95%;
-                padding: 20px;
+                padding: 34px 24px;
+                gap: 24px;
             }
-            
-            h1 {
-                font-size: 1.8rem;
+
+            .glass-card {
+                padding: 22px;
             }
-            
+
             button {
                 width: 100%;
+            }
+
+            #analyze-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .description {
+                font-size: 0.95rem;
+            }
+
+            .container {
+                padding: 28px 18px;
             }
         }
     </style>
@@ -235,8 +411,8 @@
     <div class="container">
         <h1>Review Sentiment Analyzer</h1>
         <p class="description">Analyze the sentiment of product reviews using Hugging Face's AI model</p>
-        
-        <div class="api-section">
+
+        <div class="api-section glass-card">
             <h2>Hugging Face API Setup</h2>
             <div class="api-input">
                 <label for="api-token">Enter your Hugging Face API Token:</label>
@@ -244,29 +420,29 @@
                 <p><small>Your token is stored only in your browser and is never sent to our servers.</small></p>
             </div>
         </div>
-        
+
         <div class="review-section">
-            <button id="analyze-btn">Analyze Random Review</button>
-            
+            <button id="analyze-btn"><i class="fas fa-wand-magic-sparkles"></i> Analyze Random Review</button>
+
             <div class="loading">
                 <div class="spinner"></div>
                 <p>Analyzing sentiment...</p>
             </div>
-            
+
             <div class="error" id="error-message"></div>
-            
-            <div class="review-card">
+
+            <div class="review-card glass-card">
                 <h3>Selected Review:</h3>
                 <p class="review-text" id="review-text">Click the button above to analyze a random review</p>
             </div>
-            
-            <div class="sentiment-result" id="sentiment-result">
+
+            <div class="sentiment-result glass-card" id="sentiment-result">
                 <i class="fas fa-question-circle icon"></i>
                 <span>Sentiment will appear here</span>
             </div>
         </div>
-        
-        <div class="instructions">
+
+        <div class="instructions glass-card">
             <h3>How to get a Hugging Face API Token:</h3>
             <ol>
                 <li>Go to <a href="https://huggingface.co/" target="_blank">huggingface.co</a> and create a free account</li>
@@ -276,7 +452,7 @@
             </ol>
         </div>
     </div>
-    
+
     <footer>
         <p>This app uses the distilbert-base-uncased-finetuned-sst-2-english model from Hugging Face</p>
     </footer>
