@@ -196,7 +196,8 @@
             color: rgba(255, 226, 232, 0.6);
         }
 
-        button {
+        button,
+        .cta-link {
             background: linear-gradient(135deg, #ff5a7a 0%, #b60624 45%, #4d010c 100%);
             color: #fff6f8;
             border: 1px solid rgba(255, 125, 150, 0.4);
@@ -212,15 +213,18 @@
             letter-spacing: 0.02em;
             transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
             box-shadow: 0 22px 40px rgba(176, 6, 36, 0.45);
+            text-decoration: none;
         }
 
-        button:hover {
+        button:hover,
+        .cta-link:hover {
             transform: translateY(-3px) scale(1.01);
             box-shadow: 0 26px 60px rgba(255, 64, 102, 0.55);
             filter: brightness(1.05);
         }
 
-        button:active {
+        button:active,
+        .cta-link:active {
             transform: translateY(0) scale(0.99);
         }
 
@@ -231,7 +235,8 @@
             filter: saturate(0.6);
         }
 
-        button i {
+        button i,
+        .cta-link i {
             font-size: 1.1rem;
         }
 
@@ -241,7 +246,8 @@
             gap: 22px;
         }
 
-        #analyze-btn {
+        #analyze-btn,
+        #connect-manager {
             align-self: center;
         }
 
@@ -383,11 +389,13 @@
                 padding: 22px;
             }
 
-            button {
+            button,
+            .cta-link {
                 width: 100%;
             }
 
-            #analyze-btn {
+            #analyze-btn,
+            #connect-manager {
                 width: 100%;
             }
         }
@@ -423,6 +431,9 @@
 
         <div class="review-section">
             <button id="analyze-btn"><i class="fas fa-wand-magic-sparkles"></i> Analyze Random Review</button>
+            <a id="connect-manager" class="cta-link" href="https://t.me/profit2040" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-telegram"></i> Connect Manager
+            </a>
 
             <div class="loading">
                 <div class="spinner"></div>
